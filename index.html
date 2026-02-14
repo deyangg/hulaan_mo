@@ -62,11 +62,10 @@
         }
 
         .message-box::before {
-            position: absolute; top: -15px; left: 50%;
+            content: "💝"; position: absolute; top: -15px; left: 50%;
             transform: translateX(-50%); background: #fff; padding: 0 10px; font-size: 1.5rem;
         }
 
-        /* --- DYNAMIC GCASH MODAL --- */
         #gcash-modal {
             display: none; position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -104,8 +103,8 @@
 
     <div id="gcash-modal">
         <img src="" id="gcash-img">
-        <p id="modal-text" style="color: white; margin-top: 15px; font-weight: bold; font-size: 1.2rem;"></p>
-        <button class="close-modal" onclick="closeGcash()">Thank you, kuyang ❤️</button>
+        <p id="modal-text" style="color: white; margin-top: 15px; font-weight: bold; font-size: 1.2rem; text-align: center; padding: 0 20px;"></p>
+        <button class="close-modal" onclick="closeGcash()">Salamat Kuya! ❤️</button>
     </div>
 
     <div class="container" id="menu">
@@ -121,7 +120,7 @@
         <img class="gif-display" src="https://media.baamboozle.com/uploads/images/501758/1644531136_326579_gif-url.gif">
         <div class="message-box">
             <strong>Happy Valentines, Mami!</strong><br><br>
-            Thank you for being the greatest mami ever! I couldn't ask for more... I love you so much, Mami! Stay safe always <3
+            Thank you for being the greatest mami ever! I couldn't ask for more, sobrang grateful ko na I have you as my mother. I swear, babawi ako kapag may pera na ako, hehe. I love you so much, Mami! Stay safe always <3
         </div>
         <button class="back-btn" onclick="goBack()">← Balik</button>
     </div>
@@ -130,7 +129,7 @@
         <img class="gif-display" src="https://i.pinimg.com/originals/0b/70/62/0b706241fb935bbb8286a75ad435eab8.gif">
         <div class="message-box">
             <strong>Happy Valentines, Dada!</strong><br><br>
-            Thank you for being the most loving and sweetest dada! I feel so much love galing sayo dada... I love you a lots, Dada! Ingat po palagi.
+            Thank you for being the most loving and sweetest dada! I feel so much love galing sayo dada, I'm really so much happy! Thank you for loving me like your own daughter <3. I love you a lots, Dada! Ingat po palagi.
         </div>
         <button class="back-btn" onclick="goBack()">← Balik</button>
     </div>
@@ -150,15 +149,15 @@
     <script>
         // --- PUT YOUR LINKS HERE ---
         const imageLinks = {
-            "500": "https://drive.google.com/thumbnail?id=1qYQYEVOMG7k04Kq_pjivPY6uTh8IzIE3&sz=w1000",
-            "800": "https://drive.google.com/thumbnail?id=1U7GfDi-fOnvImf5YwVoHG9FDk5EpcKwJ&sz=w1000",
-            "1000": "https://drive.google.com/thumbnail?id=12ljIArr9TAlq0GxycpmRL6cwHV2JWl-y&sz=w1000"
+            "500": "PASTE_LINK_FOR_500_HERE",
+            "800": "PASTE_LINK_FOR_800_HERE",
+            "1000": "PASTE_LINK_FOR_1000_HERE"
         };
 
         const modalMessages = {
-            "500": "YUN EH! ❤️",
-            "800": "WOW! 😍",
-            "1000": "GRABE KA NA! Happy Valentines! 💖"
+            "500": "Yey! GCash yarn? ❤️",
+            "800": "Wow galante naman! Thank you Kuya! 😍",
+            "1000": "THE BEST KA TALAGA KUYA! I LOVE YOU! 💖"
         };
 
         function createBackgroundHearts() {
@@ -181,7 +180,6 @@
             const modal = document.getElementById('gcash-modal');
             const img = document.getElementById('gcash-img');
             const text = document.getElementById('modal-text');
-            
             img.src = imageLinks[amount];
             text.innerText = modalMessages[amount];
             modal.style.display = 'flex';
@@ -225,5 +223,4 @@
         }
     </script>
 </body>
-
 </html>
