@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Valentine's Special Surprise</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; width: 100vw; height: 100vh;
+        }
+
+        .hearts-container {
+            position: absolute; width: 100%; height: 100%;
+            top: 0; left: 0; z-index: 0; pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.4);
+            clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+            animation: floatUp 10s linear infinite;
+            bottom: -50px;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            position: relative; z-index: 10;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            padding: 30px; border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            text-align: center; width: 320px; 
+        }
+
+        h1 { color: #d63384; margin-bottom: 25px; font-size: 1.8rem; }
+        
+        .btn {
+            background-color: white; color: #d63384; border: none;
+            padding: 15px 20px; font-size: 1.1rem; font-weight: bold;
+            border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            touch-action: manipulation; transition: background-color 0.3s;
+        }
+
+        .message-box {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 25px; border-radius: 20px; color: #b51c62;
+            text-align: left; line-height: 1.7; margin-top: 20px;
+            border: 2px solid #ffccd5; position: relative; font-size: 1.05rem;
+        }
+
+        .message-box::before {
+            content: "💝"; position: absolute; top: -15px; left: 50%;
+            transform: translateX(-50%); background: #fff; padding: 0 10px; font-size: 1.5rem;
+        }
+
+        /* --- DYNAMIC GCASH MODAL --- */
+        #gcash-modal {
+            display: none; position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 20000; justify-content: center;
+            align-items: center; flex-direction: column;
+        }
+
+        #gcash-modal img {
+            max-width: 85%; max-height: 70%;
+            border-radius: 15px; box-shadow: 0 0 25px rgba(255,255,255,0.2);
+        }
+
+        .close-modal {
+            margin-top: 20px; background: white; color: #d63384;
+            padding: 12px 35px; border-radius: 50px;
+            font-weight: bold; border: none; cursor: pointer;
+        }
+
+        .back-btn {
+            margin-top: 25px; background: rgba(255, 255, 255, 0.6);
+            color: #d63384; border: 1px solid #d63384;
+            padding: 10px 25px; border-radius: 20px; cursor: pointer;
+        }
+
+        .kuya-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+        .hidden { display: none !important; }
+        .gif-display { width: 140px; border-radius: 15px; margin-bottom: 10px; }
+        #zero-btn { z-index: 10000; }
+    </style>
+</head>
+<body>
+
+    <div class="hearts-container" id="hearts-bg"></div>
+
+    <div id="gcash-modal">
+        <img src="" id="gcash-img">
+        <p id="modal-text" style="color: white; margin-top: 15px; font-weight: bold; font-size: 1.2rem;"></p>
+        <button class="close-modal" onclick="closeGcash()">Thank you, kuyang ❤️</button>
+    </div>
+
+    <div class="container" id="menu">
+        <h1>Sino ka muna? ❤️</h1>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <button class="btn" onclick="celebrate('mami')">Ako si Mami</button>
+            <button class="btn" onclick="celebrate('dada')">Ako si Dada</button>
+            <button class="btn" onclick="celebrate('kuya')">Ako si Kuya</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="mami-page">
+        <img class="gif-display" src="https://media.baamboozle.com/uploads/images/501758/1644531136_326579_gif-url.gif">
+        <div class="message-box">
+            <strong>Happy Valentines, Mami!</strong><br><br>
+            Thank you for being the greatest mami ever! I couldn't ask for more... I love you so much, Mami! Stay safe always <3
+        </div>
+        <button class="back-btn" onclick="goBack()">← Balik</button>
+    </div>
+
+    <div class="container hidden" id="dada-page">
+        <img class="gif-display" src="https://i.pinimg.com/originals/0b/70/62/0b706241fb935bbb8286a75ad435eab8.gif">
+        <div class="message-box">
+            <strong>Happy Valentines, Dada!</strong><br><br>
+            Thank you for being the most loving and sweetest dada! I feel so much love galing sayo dada... I love you a lots, Dada! Ingat po palagi.
+        </div>
+        <button class="back-btn" onclick="goBack()">← Balik</button>
+    </div>
+
+    <div class="container hidden" id="kuya-page">
+        <img class="gif-display" src="https://c.tenor.com/ZYsOQeFXpmwAAAAM/cat-meow.gif">
+        <h2 style="font-size: 1.1rem; color: #d63384;">Magkano ang ibibigay mo saakin ngayon valentines?</h2>
+        <div class="kuya-grid" id="grid-parent">
+            <button class="btn" style="font-size: 0.9rem;" onclick="showGcash('500')">500</button>
+            <button class="btn" style="font-size: 0.9rem;" onclick="showGcash('800')">800</button>
+            <button class="btn" style="font-size: 0.9rem;" onclick="showGcash('1000')">1,000</button>
+            <button class="btn" style="font-size: 0.9rem;" id="zero-btn" onclick="moveZero()">0</button>
+        </div>
+        <button class="back-btn" onclick="goBack()">← Balik</button>
+    </div>
+
+    <script>
+        // --- PUT YOUR LINKS HERE ---
+        const imageLinks = {
+            "500": "https://drive.google.com/thumbnail?id=1qYQYEVOMG7k04Kq_pjivPY6uTh8IzIE3&sz=w1000",
+            "800": "https://drive.google.com/thumbnail?id=1U7GfDi-fOnvImf5YwVoHG9FDk5EpcKwJ&sz=w1000",
+            "1000": "https://drive.google.com/thumbnail?id=12ljIArr9TAlq0GxycpmRL6cwHV2JWl-y&sz=w1000"
+        };
+
+        const modalMessages = {
+            "500": "YUN EH! ❤️",
+            "800": "WOW! 😍",
+            "1000": "GRABE KA NA! Happy Valentines! 💖"
+        };
+
+        function createBackgroundHearts() {
+            const bg = document.getElementById('hearts-bg');
+            for(let i=0; i<60; i++) {
+                const h = document.createElement('div');
+                h.className = 'heart';
+                h.style.left = Math.random() * 100 + '%';
+                const size = (Math.random() * 25 + 10) + 'px';
+                h.style.width = h.style.height = size;
+                h.style.animationDelay = (Math.random() * 15) + 's';
+                h.style.animationDuration = (Math.random() * 7 + 6) + 's'; 
+                h.style.opacity = Math.random() * 0.5 + 0.2;
+                bg.appendChild(h);
+            }
+        }
+        createBackgroundHearts();
+
+        function showGcash(amount) {
+            const modal = document.getElementById('gcash-modal');
+            const img = document.getElementById('gcash-img');
+            const text = document.getElementById('modal-text');
+            
+            img.src = imageLinks[amount];
+            text.innerText = modalMessages[amount];
+            modal.style.display = 'flex';
+        }
+
+        function closeGcash() {
+            document.getElementById('gcash-modal').style.display = 'none';
+        }
+
+        function celebrate(person) {
+            setTimeout(() => {
+                document.getElementById('menu').classList.add('hidden');
+                document.getElementById(person + '-page').classList.remove('hidden');
+            }, 300);
+        }
+
+        function goBack() {
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+            document.getElementById('menu').classList.remove('hidden');
+            const btn = document.getElementById('zero-btn');
+            btn.style.position = 'static';
+            btn.style.width = 'auto';
+            btn.style.height = 'auto';
+            document.getElementById('grid-parent').appendChild(btn);
+        }
+
+        function moveZero() {
+            const btn = document.getElementById('zero-btn');
+            document.body.appendChild(btn);
+            const bWidth = 150; 
+            const bHeight = 50;
+            const maxX = window.innerWidth - bWidth - 40;
+            const maxY = window.innerHeight - bHeight - 40;
+            const randomX = Math.max(20, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(20, Math.floor(Math.random() * maxY));
+            btn.style.position = 'fixed';
+            btn.style.width = bWidth + 'px';
+            btn.style.height = bHeight + 'px';
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+        }
+    </script>
+</body>
+</html>
